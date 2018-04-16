@@ -1,0 +1,22 @@
+{
+  "name": "winemap",
+  "version": "1.0.0",
+  "description": "Wine map for the wine class Created by Tina Howard and Help from Jesse Jurman # wineMap",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chtinahow/wineMap.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chtinahow/wineMap/issues"
+  },
+  "homepage": "https://github.com/chtinahow/wineMap#readme",
+  "dependencies": {
+    "tram-one-express": "^5.0.0"
+  }
+}
