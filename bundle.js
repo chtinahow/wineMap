@@ -7,7 +7,7 @@ module.exports = {
   init: function init() {
     return {
       'Wine Name': true,
-      'Vintage': true,
+      'Vintage': false,
       'Color': false,
       'Price': false,
       'Country': false
@@ -303,7 +303,7 @@ module.exports = function (attrs) {
 },{"./search-card":8,"tram-one":5}],12:[function(require,module,exports){
 'use strict';
 
-var _templateObject = _taggedTemplateLiteral(['\n    <search-card title=', ' disabled=', ' onenable=', ' ondisable=', '>\n      Min: <input placeholder="Min ', '" onblur=', ' value=', '/>\n      Max: <input placeholder="Max ', '" onblur=', ' value=', '/>\n    </search-card>\n  '], ['\n    <search-card title=', ' disabled=', ' onenable=', ' ondisable=', '>\n      Min: <input placeholder="Min ', '" onblur=', ' value=', '/>\n      Max: <input placeholder="Max ', '" onblur=', ' value=', '/>\n    </search-card>\n  ']);
+var _templateObject = _taggedTemplateLiteral(['\n    <search-card title=', ' disabled=', ' onenable=', ' ondisable=', '>\n      <input placeholder="Min ', '" onblur=', ' value=', '/>\n      <input placeholder="Max ', '" onblur=', ' value=', '/>\n    </search-card>\n  '], ['\n    <search-card title=', ' disabled=', ' onenable=', ' ondisable=', '>\n      <input placeholder="Min ', '" onblur=', ' value=', '/>\n      <input placeholder="Max ', '" onblur=', ' value=', '/>\n    </search-card>\n  ']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -315,7 +315,7 @@ var html = Tram.html({
 });
 
 module.exports = function (attrs) {
-  var vintageValue = attrs.value === 'true' ? { min: 0, max: 0 } : attrs.value;
+  var vintageValue = attrs.value === 'true' ? { min: '', max: '' } : attrs.value;
   var minInput = function minInput(event) {
     if (event.currentTarget.value) {
       attrs.onsetvalue(_defineProperty({}, attrs.title, Object.assign({}, vintageValue, { min: event.currentTarget.value })));
