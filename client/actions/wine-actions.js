@@ -1,5 +1,5 @@
 module.exports = {
-  init: () => ({wineResults: null, status: 'NOT_LOADED'}),
+  init: () => ({wineResults: null, searchParams: {}, status: 'NOT_LOADED'}),
   fetchWineResults: (state, searchParameters, actions) => {
     const wineParams = Object.keys(searchParameters).reduce((stringParam, key) => {
       switch (key) {
@@ -26,7 +26,7 @@ module.exports = {
         }
         actions.setWineResults(results)
       })
-    return Object.assign({}, state, {status: 'LOADING'})
+    return Object.assign({}, state, {status: 'LOADING', searchParams: searchParameters})
   },
   setWineResults: (state, data) => Object.assign({}, state, {wineResults: data, status: 'LOADED'})
 }

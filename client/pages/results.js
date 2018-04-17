@@ -6,16 +6,16 @@ const html = Tram.html({
 const getOrFetchDrinkDOM = (store, actions, params) => {
   switch (store.results.status) {
     case 'NOT_LOADED':
-      actions.fetchWineResults(params)
+      actions.fetchWineResults(JSON.parse(params.searchParams))
       return 'fetching...'
     case 'LOADING':
       return 'loading...'
     case 'LOADED':
       // If we have results, check if they're for the same search params
-      // if (store.results.drink.id !== params.drinkId) {
-      //   actions.fetchWineResults(params.drinkId)
-      //   return 'fetching...'
-      // }
+      if (JSON.stringify(store.results.searchParams) !== params.searchParams) {
+        actions.fetchWineResults(JSON.parse(params.searchParams))
+        return 'fetching...'
+      }
       return store.results.wineResults.map(wineResult =>
         html`
             <wine-card name=${wineResult.name}

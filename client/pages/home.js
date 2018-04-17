@@ -7,20 +7,10 @@ const html = Tram.html({
 })
 
 const queryToString = (queryObject) => {
-  const wineParams = Object.keys(searchParameters).reduce((stringParam, key) => {
-    switch (key) {
-      case 'Wine Name':
-        return `${stringParam}&q=${searchParameters[key]}`
-      case 'Color':
-        return `${stringParam}&color=${searchParameters[key]}`
-      case 'Price':
-        return `${stringParam}&mp=${searchParameters[key].min}&xp=${searchParameters[key].max}`
-      case 'Country':
-        return `${stringParam}&c=${searchParameters[key]}`
-      default :
-        return stringParam
-    }
-  }, '')
+  const cleanObject = Object.keys(queryObject)
+    .filter(key => queryObject[key])
+    .reduce((finalObject, key) => Object.assign({}, finalObject, {[key]: queryObject[key]}), {})
+  return `searchParams=${JSON.stringify(cleanObject)}`
 }
 
 module.exports = (store, actions) => {
