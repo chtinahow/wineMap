@@ -29,7 +29,7 @@ module.exports = {
 
 module.exports = {
   init: function init() {
-    return { wineResults: null, status: 'NOT_LOADED' };
+    return { wineResults: null, searchParams: {}, status: 'NOT_LOADED' };
   },
   fetchWineResults: function fetchWineResults(state, searchParameters, actions) {
     var wineParams = Object.keys(searchParameters).reduce(function (stringParam, key) {
@@ -57,7 +57,7 @@ module.exports = {
       }
       actions.setWineResults(results);
     });
-    return Object.assign({}, state, { status: 'LOADING' });
+    return Object.assign({}, state, { status: 'LOADING', searchParams: searchParameters });
   },
   setWineResults: function setWineResults(state, data) {
     return Object.assign({}, state, { wineResults: data, status: 'LOADED' });
@@ -126,6 +126,8 @@ var _templateObject = _taggedTemplateLiteral(['\n    <div style="max-width: 600p
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var Tram = require('tram-one');
 var html = Tram.html({
   'search-input': require('../search-card-components/search-input'),
@@ -135,20 +137,12 @@ var html = Tram.html({
 });
 
 var queryToString = function queryToString(queryObject) {
-  var wineParams = Object.keys(searchParameters).reduce(function (stringParam, key) {
-    switch (key) {
-      case 'Wine Name':
-        return stringParam + '&q=' + searchParameters[key];
-      case 'Color':
-        return stringParam + '&color=' + searchParameters[key];
-      case 'Price':
-        return stringParam + '&mp=' + searchParameters[key].min + '&xp=' + searchParameters[key].max;
-      case 'Country':
-        return stringParam + '&c=' + searchParameters[key];
-      default:
-        return stringParam;
-    }
-  }, '');
+  var cleanObject = Object.keys(queryObject).filter(function (key) {
+    return queryObject[key];
+  }).reduce(function (finalObject, key) {
+    return Object.assign({}, finalObject, _defineProperty({}, key, queryObject[key]));
+  }, {});
+  return 'searchParams=' + JSON.stringify(cleanObject);
 };
 
 module.exports = function (store, actions) {
@@ -175,16 +169,16 @@ var html = Tram.html({
 var getOrFetchDrinkDOM = function getOrFetchDrinkDOM(store, actions, params) {
   switch (store.results.status) {
     case 'NOT_LOADED':
-      actions.fetchWineResults(params);
+      actions.fetchWineResults(JSON.parse(params.searchParams));
       return 'fetching...';
     case 'LOADING':
       return 'loading...';
     case 'LOADED':
       // If we have results, check if they're for the same search params
-      // if (store.results.drink.id !== params.drinkId) {
-      //   actions.fetchWineResults(params.drinkId)
-      //   return 'fetching...'
-      // }
+      if (JSON.stringify(store.results.searchParams) !== params.searchParams) {
+        actions.fetchWineResults(JSON.parse(params.searchParams));
+        return 'fetching...';
+      }
       return store.results.wineResults.map(function (wineResult) {
         return html(_templateObject, wineResult.name, wineResult.image, wineResult.price, wineResult.vintage, wineResult.link);
       });
