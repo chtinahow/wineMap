@@ -2,7 +2,7 @@
   "name": "client",
   "version": "1.0.0",
   "scripts": {
-    "start": "budo main.js:bundle.js --pushstate --dir public --live",
+    "start": "budo main.js:wineSearch/bundle.js --pushstate --dir public --live",
     "prebuild": "cp -r public/ dist",
     "build": "browserify ./main.js -o ./dist/bundle.js -t [ babelify --presets [ env ] ] --dir public",
     "test": "jasmine ./specs/specs.js",
