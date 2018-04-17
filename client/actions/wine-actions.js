@@ -1,5 +1,3 @@
-const apiKey = 'dm2umigp683o6ied149g1hdckyn0vyf9zpjkqqg4x7ny1qee'
-
 module.exports = {
   init: () => ({wineResults: null, status: 'NOT_LOADED'}),
   fetchWineResults: (state, searchParameters, actions) => {
@@ -17,7 +15,7 @@ module.exports = {
           return stringParam
       }
     }, '')
-    fetch(`http://api.snooth.com/wines/?akey=${apiKey}&${wineParams}`)
+    fetch(`https://us-central1-winesearch-140f6.cloudfunctions.net/wineSearch?${wineParams.slice(1)}`)
       .then(data => data.json())
       .then((data) => {
         let results = data.wines
