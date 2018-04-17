@@ -6,7 +6,7 @@ const html = Tram.html({
 const getOrFetchDrinkDOM = (store, actions, params) => {
   switch (store.results.status) {
     case 'NOT_LOADED':
-      actions.fetchWineResults({Vintage: {min: '2009', max: '2018'}, Color: 'White'})
+      actions.fetchWineResults(params)
       return 'fetching...'
     case 'LOADING':
       return 'loading...'
@@ -20,7 +20,7 @@ const getOrFetchDrinkDOM = (store, actions, params) => {
         html`
             <wine-card name=${wineResult.name}
               image=${wineResult.image} price=${wineResult.price}
-              vintage=${wineResult.vintage}/>
+              vintage=${wineResult.vintage} href=${wineResult.link}/>
         `
       )
     default:

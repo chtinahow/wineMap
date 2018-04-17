@@ -6,7 +6,15 @@ const html = Tram.html({
   'search-dropdown': require('../search-card-components/search-dropdown'),
 })
 
+const queryToString = (queryObject) => {
+  return Object.keys(queryObject).filter(key => queryObject[key]).map(key => `${key}=${queryObject[key]}`).join('&')
+}
+
 module.exports = (store, actions) => {
+  const nav = () => {
+    window.history.pushState({}, '', `/wineSearch/#wineResults?${queryToString(store.enabled)}`)
+  }
+
   return html`
     <div style="max-width: 600px; margin:auto;">
       <search-input
@@ -65,6 +73,7 @@ module.exports = (store, actions) => {
         <option value="CH" ${store.enabled['Country'] === 'CH' ? 'selected' : ''}> Switzerland </option>
         <option value="UK" ${store.enabled['Country'] === 'UK' ? 'selected' : ''}> United Kingdom </option>
       </search-dropdown>
+      <button onclick=${nav}>Search</button>
     </div>
   `
 }

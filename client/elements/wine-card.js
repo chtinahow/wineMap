@@ -6,6 +6,9 @@ const box = `
   min-height: 100px;
   margin-bottom: 1em;
   padding: 1em;
+  cursor: pointer;
+  max-width: 600px;
+  margin: auto;
 `
 
 const cardTitleStyle =`
@@ -37,15 +40,20 @@ const gridDisplay =`
 `
 
 module.exports = (attrs) => {
+  const nav = () => {
+    window.location.href = attrs.href
+  }
+  const price = attrs.price > 0 ? `Price: $${attrs.price}` : ''
+  const vintage = attrs.vintage ? `Vintage: ${attrs.vintage}` : ''
   return html`
-    <div style='${box} ${gridDisplay} max-width: 600px; margin:auto;' >
+    <div style='${box} ${gridDisplay}' onclick=${nav}>
       <h2 style=${cardTitleStyle}>${attrs.name} </h2>
       <div style=${contentStyle}>
         <img src=${attrs.image} />
       </div>
       <div style=${infoStyle}>
-        Price: $${attrs.price}
-        Vintage: ${attrs.vintage}
+        ${price}
+        ${vintage}
       </div>
     </div>
   `
