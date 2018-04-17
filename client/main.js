@@ -2,7 +2,7 @@ const Tram = require('tram-one')
 
 const app = new Tram()
 app.addRoute('/wineSearch', require('./pages/home'))
-app.addRoute('/wineSearch#wineResults', require('./pages/results'))
+app.addRoute('/wineSearch/#wineResults', require('./pages/results'))
 app.addActions({
   enabled: require('./actions/enable-actions'),
   results: require('./actions/wine-actions')

@@ -1,5 +1,6 @@
 const Tram = require('tram-one')
 const html = Tram.html({
+  'wine-card' : require('../elements/wine-card')
 })
 
 const getOrFetchDrinkDOM = (store, actions, params) => {
@@ -15,7 +16,13 @@ const getOrFetchDrinkDOM = (store, actions, params) => {
       //   actions.fetchWineResults(params.drinkId)
       //   return 'fetching...'
       // }
-      return JSON.stringify(store.results.wineResults)
+      return store.results.wineResults.map(wineResult =>
+        html`
+            <wine-card name=${wineResult.name}
+              image=${wineResult.image} price=${wineResult.price}
+              vintage=${wineResult.vintage}/>
+        `
+      )
     default:
       return 'Error...'
   }
