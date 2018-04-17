@@ -12,5 +12,8 @@ module.exports = ({
   },
   enable: (options, optionToEnable) => {
     return Object.assign({},options, {[optionToEnable]: true})
+  },
+  setSearchParam: (options, newSearchObject) => {
+    return Object.assign({}, options, newSearchObject)
   }
 })
