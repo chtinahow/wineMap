@@ -7,7 +7,20 @@ const html = Tram.html({
 })
 
 const queryToString = (queryObject) => {
-  return Object.keys(queryObject).filter(key => queryObject[key]).map(key => `${key}=${queryObject[key]}`).join('&')
+  const wineParams = Object.keys(searchParameters).reduce((stringParam, key) => {
+    switch (key) {
+      case 'Wine Name':
+        return `${stringParam}&q=${searchParameters[key]}`
+      case 'Color':
+        return `${stringParam}&color=${searchParameters[key]}`
+      case 'Price':
+        return `${stringParam}&mp=${searchParameters[key].min}&xp=${searchParameters[key].max}`
+      case 'Country':
+        return `${stringParam}&c=${searchParameters[key]}`
+      default :
+        return stringParam
+    }
+  }, '')
 }
 
 module.exports = (store, actions) => {
@@ -26,6 +39,7 @@ module.exports = (store, actions) => {
       <search-range
         title="Vintage" disabled=${!store.enabled["Vintage"]}
         onenable=${actions.enable} ondisable=${actions.disable}
+        onsetvalue=${actions.setSearchParam} value=${store.enabled["Vintage"]}
       />
       <search-options
         title="Color" disabled=${!store.enabled["Color"]}
@@ -36,6 +50,7 @@ module.exports = (store, actions) => {
       <search-range
         title="Price" disabled=${!store.enabled["Price"]}
         onenable=${actions.enable} ondisable=${actions.disable}
+        onsetvalue=${actions.setSearchParam} value=${store.enabled["Price"]}
       />
       <search-dropdown
         title="Country" disabled=${!store.enabled["Country"]}
@@ -73,7 +88,7 @@ module.exports = (store, actions) => {
         <option value="CH" ${store.enabled['Country'] === 'CH' ? 'selected' : ''}> Switzerland </option>
         <option value="UK" ${store.enabled['Country'] === 'UK' ? 'selected' : ''}> United Kingdom </option>
       </search-dropdown>
-      <button onclick=${nav}>Search</button>
+      <button onclick=${nav} style='width: 100%; height: 5em;'>Search</button>
     </div>
   `
 }

@@ -2,7 +2,7 @@
 module.exports = ({
   init: () => ({
     'Wine Name': true,
-    'Vintage': false,
+    'Vintage': true,
     'Color': false,
     'Price': false,
     'Country': false
