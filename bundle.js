@@ -72,8 +72,8 @@ module.exports = {
 var Tram = require('tram-one');
 
 var app = new Tram();
-app.addRoute('/', require('./pages/home'));
-app.addRoute('#wineResults', require('./pages/results'));
+app.addRoute('/wineSearch', require('./pages/home'));
+app.addRoute('/wineSearch#wineResults', require('./pages/results'));
 app.addActions({
   enabled: require('./actions/enable-actions'),
   results: require('./actions/wine-actions')
